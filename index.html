@@ -1,201 +1,188 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mes Objectifs 🌿</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            background: linear-gradient(#e8f5e9, #f1f8e9);
-            margin: 0;
-            padding: 2rem;
-            color: #2e7d32;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            background-size: cover;
-            background-repeat: no-repeat;
-            transition: background 1s ease;
-            overflow-x: hidden;
-        }
-        h1 {
-            text-align: center;
-            font-size: 2.5em;
-            margin-bottom: 1rem;
-            transition: color 1s ease;
-        }
-        .todo-item {
-            background: #ffffff;
-            margin: 0.5rem 0;
-            padding: 1rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            display: flex;
-            align-items: center;
-            transition: background-color 0.3s ease;
-        }
-        input[type="checkbox"] {
-            width: 1.5rem;
-            height: 1.5rem;
-            margin-right: 1rem;
-            accent-color: #66bb6a;
-        }
-        label {
-            font-size: 1.2rem;
-        }
-        .progress-container {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background: #c8e6c9;
-            height: 20px;
-        }
-        .progress-bar {
-            height: 100%;
-            width: 0%;
-            background: #66bb6a;
-            transition: width 0.3s ease;
-        }
-        .reset-button {
-            margin: 2rem auto;
-            display: block;
-            padding: 1.2rem 2rem;
-            background-color: #a5d6a7;
-            border: none;
-            border-radius: 12px;
-            font-size: 1.4rem;
-            color: #2e7d32;
-            cursor: pointer;
-            box-shadow: 0 8px 12px rgba(0,0,0,0.15);
-            transition: background-color 0.4s ease, transform 0.2s ease;
-        }
-        .reset-button:hover {
-            background-color: #81c784;
-            transform: scale(1.05);
-        }
-        .confetti {
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            background-color: #66bb6a;
-            opacity: 0;
-            animation: confetti-fall 2s ease forwards;
-        }
-        @keyframes confetti-fall {
-            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
-        }
-        .greener {
-            background: linear-gradient(#a8e6cf, #dcedc8) !important;
-        }
-        .greener h1 {
-            color: #388e3c !important;
-        }
-        .todo-item.greener {
-            background: #e0f2f1 !important;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mes Objectifs 🌿</title>
+<style>
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(#e8f5e9, #f1f8e9);
+    margin: 0;
+    padding: 2rem;
+    color: #2e7d32;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-size: cover;
+    background-repeat: no-repeat;
+    transition: background 1s ease, background-color 1s ease;
+    overflow-x: hidden;
+}
+h1 {
+    text-align: center;
+    font-size: 2.5em;
+    margin-bottom: 1rem;
+    transition: color 1s ease;
+}
+.todo-item {
+    background: #ffffff;
+    margin: 0.5rem 0;
+    padding: 1rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    transition: background-color 0.3s ease;
+}
+input[type="checkbox"] {
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-right: 1rem;
+    accent-color: #66bb6a;
+}
+label {
+    font-size: 1.2rem;
+}
+.progress-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: #c8e6c9;
+    height: 20px;
+}
+.progress-bar {
+    height: 100%;
+    width: 0%;
+    background: #66bb6a;
+    transition: width 0.3s ease;
+}
+.reset-button {
+    margin: 2rem auto;
+    display: block;
+    padding: 1.5rem 2.5rem;
+    background-color: #81c784;
+    border: none;
+    border-radius: 16px;
+    font-size: 1.6rem;
+    color: #2e7d32;
+    cursor: pointer;
+    box-shadow: 0 10px 15px rgba(0,0,0,0.2);
+    transition: background-color 0.4s ease, transform 0.3s ease;
+}
+.reset-button:hover {
+    background-color: #66bb6a;
+    transform: scale(1.1);
+}
+.confetti {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: #66bb6a;
+    opacity: 0;
+    animation: confetti-fall 2.5s ease forwards;
+    border-radius: 50%;
+}
+@keyframes confetti-fall {
+    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+.greener {
+    background: linear-gradient(#a8e6cf, #dcedc8) !important;
+}
+.greener h1 {
+    color: #1b5e20 !important;
+}
+.todo-item.greener {
+    background: #e8f5e9 !important;
+}
+body.final-stage {
+    background: radial-gradient(circle at center, #a5d6a7, #81c784, #66bb6a);
+    animation: pulse 2s infinite alternate;
+}
+@keyframes pulse {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
+}
+</style>
 </head>
 <body>
 
-    <h1>🌿 Mes Objectifs 🌿</h1>
+<h1>Mes Objectifs 🌿</h1>
 
-    <div class="todo-list">
-        <div class="todo-item">
-            <input type="checkbox" id="devoirs">
-            <label for="devoirs">✏️ Avancer sur mes devoirs</label>
-        </div>
+<div class="todo-list">
+    <div class="todo-item"><input type="checkbox" id="devoirs"><label for="devoirs">✏️ Avancer sur mes devoirs</label></div>
+    <div class="todo-item"><input type="checkbox" id="memoire"><label for="memoire">📚 Progresser sur mon mémoire</label></div>
+    <div class="todo-item"><input type="checkbox" id="cours"><label for="cours">✋️ Lire mon cours et en faire un résumé</label></div>
+    <div class="todo-item"><input type="checkbox" id="philo"><label for="philo">💭 Étoffer ma fiche de philosophie</label></div>
+    <div class="todo-item"><input type="checkbox" id="memoire2"><label for="memoire2">🧠 Faire avancer mon mémoire</label></div>
+    <div class="todo-item"><input type="checkbox" id="livre"><label for="livre">📖 Avancer sur la lecture de mon livre</label></div>
+</div>
 
-        <div class="todo-item">
-            <input type="checkbox" id="memoire">
-            <label for="memoire">📚 Progresser sur mon mémoire</label>
-        </div>
+<button class="reset-button" onclick="resetAll()">🌸 Palingénésie</button>
 
-        <div class="todo-item">
-            <input type="checkbox" id="cours">
-            <label for="cours">✋️ Lire mon cours et en faire un résumé</label>
-        </div>
-
-        <div class="todo-item">
-            <input type="checkbox" id="philo">
-            <label for="philo">💭 Étoffer ma fiche de philosophie</label>
-        </div>
-
-        <div class="todo-item">
-            <input type="checkbox" id="memoire2">
-            <label for="memoire2">🧠 Faire avancer mon mémoire</label>
-        </div>
-
-        <div class="todo-item">
-            <input type="checkbox" id="livre">
-            <label for="livre">📖 Avancer sur la lecture de mon livre</label>
-        </div>
-    </div>
-
-    <button class="reset-button" onclick="resetAll()">🌸 Palingénésie</button>
-
-    <div class="progress-container">
-        <div class="progress-bar" id="progress-bar"></div>
-    </div>
+<div class="progress-container">
+    <div class="progress-bar" id="progress-bar"></div>
+</div>
 
 <script>
-    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-    const progressBar = document.getElementById('progress-bar');
+const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+const progressBar = document.getElementById('progress-bar');
 
-    function updateProgress() {
-        const total = checkboxes.length;
-        const checked = document.querySelectorAll('input[type="checkbox"]:checked').length;
-        const percent = (checked / total) * 100;
-        progressBar.style.width = percent + '%';
+function updateProgress() {
+    const total = checkboxes.length;
+    const checked = document.querySelectorAll('input[type="checkbox"]:checked').length;
+    const percent = (checked / total) * 100;
+    progressBar.style.width = percent + '%';
+    updateBackground(percent);
 
-        updateBackground(percent);
-
-        if (percent === 100) {
-            triggerConfetti();
-        }
+    if (percent === 100) {
+        triggerFinalEffect();
     }
+}
 
-    function updateBackground(percent) {
-        if (percent < 25) {
-            document.body.style.backgroundImage = "url('https://www.transparenttextures.com/patterns/green-dust-and-scratches.png')";
-        } else if (percent < 50) {
-            document.body.style.backgroundImage = "url('https://www.transparenttextures.com/patterns/green-gobbler.png')";
-        } else if (percent < 75) {
-            document.body.style.backgroundImage = "url('https://www.transparenttextures.com/patterns/leaf.png')";
-        } else {
-            document.body.style.backgroundImage = "url('https://www.transparenttextures.com/patterns/green-cup.png')";
-        }
+function updateBackground(percent) {
+    if (percent < 25) {
+        document.body.style.backgroundColor = '#e0f2f1';
+    } else if (percent < 50) {
+        document.body.style.backgroundColor = '#c8e6c9';
+    } else if (percent < 75) {
+        document.body.style.backgroundColor = '#a5d6a7';
+    } else {
+        document.body.style.backgroundColor = '#81c784';
     }
+}
 
-    function resetAll() {
-        checkboxes.forEach(cb => cb.checked = false);
-        updateProgress();
-        triggerPalingenesia();
+function resetAll() {
+    checkboxes.forEach(cb => cb.checked = false);
+    document.body.classList.remove('final-stage');
+    updateProgress();
+    triggerPalingenesia();
+}
+
+function triggerPalingenesia() {
+    document.body.classList.add('greener');
+    document.querySelectorAll('.todo-item').forEach(item => item.classList.add('greener'));
+    setTimeout(() => {
+        document.body.classList.remove('greener');
+        document.querySelectorAll('.todo-item').forEach(item => item.classList.remove('greener'));
+    }, 2000);
+}
+
+function triggerFinalEffect() {
+    document.body.classList.add('final-stage');
+    for (let i = 0; i < 100; i++) {
+        const confetti = document.createElement('div');
+        confetti.classList.add('confetti');
+        confetti.style.left = Math.random() * 100 + 'vw';
+        confetti.style.backgroundColor = `hsl(${Math.random() * 120 + 90}, 70%, 60%)`;
+        document.body.appendChild(confetti);
+        setTimeout(() => confetti.remove(), 2500);
     }
+}
 
-    function triggerPalingenesia() {
-        document.body.classList.add('greener');
-        document.querySelectorAll('.todo-item').forEach(item => item.classList.add('greener'));
-        setTimeout(() => {
-            document.body.classList.remove('greener');
-            document.querySelectorAll('.todo-item').forEach(item => item.classList.remove('greener'));
-        }, 2000);
-    }
-
-    function triggerConfetti() {
-        for (let i = 0; i < 50; i++) {
-            const confetti = document.createElement('div');
-            confetti.classList.add('confetti');
-            confetti.style.left = Math.random() * 100 + 'vw';
-            confetti.style.backgroundColor = `hsl(${Math.random() * 120 + 90}, 60%, 60%)`;
-            document.body.appendChild(confetti);
-            setTimeout(() => confetti.remove(), 2000);
-        }
-    }
-
-    checkboxes.forEach(cb => cb.addEventListener('change', updateProgress));
+checkboxes.forEach(cb => cb.addEventListener('change', updateProgress));
 </script>
 
 </body>
