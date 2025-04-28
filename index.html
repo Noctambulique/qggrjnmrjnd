@@ -21,12 +21,18 @@ h1 {
     text-align: center;
     font-size: 2.5em;
     margin-bottom: 1rem;
-    transition: color 0.8s ease, font-size 0.8s ease;
+    transition: color 0.8s ease, font-size 0.8s ease, text-shadow 0.8s ease;
 }
 h1.completed {
-    color: #FFD700;
+    color: #FFC107;
     font-size: 3em;
     font-weight: bold;
+    animation: shine 1.5s infinite alternate;
+    text-shadow: 0 0 10px #FFD700, 0 0 20px #FFC107;
+}
+@keyframes shine {
+    0% { text-shadow: 0 0 5px #FFD700, 0 0 10px #FFC107; }
+    100% { text-shadow: 0 0 15px #FFD700, 0 0 30px #FFC107; }
 }
 .todo-item {
     background: #ffffff;
@@ -103,10 +109,10 @@ label {
 <div class="todo-list">
     <div class="todo-item"><input type="checkbox" id="devoirs"><label for="devoirs">✏️ Avancer sur mes devoirs</label></div>
     <div class="todo-item"><input type="checkbox" id="memoire"><label for="memoire">📚 Progresser sur mon mémoire</label></div>
-    <div class="todo-item"><input type="checkbox" id="cours"><label for="cours">🖊️ Lire mon cours et en faire un résumé</label></div>
+    <div class="todo-item"><input type="checkbox" id="cours"><label for="cours">✋️ Lire mon cours et en faire un résumé</label></div>
     <div class="todo-item"><input type="checkbox" id="philo"><label for="philo">💭 Étoffer mes fiches de philosophie</label></div>
+    <div class="todo-item"><input type="checkbox" id="memoire2"><label for="memoire2">🧠 Faire avancer mon mémoire</label></div>
     <div class="todo-item"><input type="checkbox" id="livre"><label for="livre">📖 Avancer sur l'écriture de mon livre</label></div>
-    <div class="todo-item"><input type="checkbox" id="livre"><label for="livre">🫦 Parler à des gens</label></div>
 </div>
 
 <div class="button-container">
@@ -140,14 +146,14 @@ function updateProgress() {
     const percent = (checked / total) * 100;
     progressBar.style.width = percent + '%';
 
-    updateBackground(checked);
-
     if (checked === total) {
         title.textContent = "⭐⭐ MISSION ACHEVÉE ⭐⭐";
         title.classList.add("completed");
+        document.body.style.backgroundColor = "#fff9c4"; // fond jaune pastel
     } else {
         title.textContent = "Mes Objectifs 🌿";
         title.classList.remove("completed");
+        updateBackground(checked);
     }
 }
 
