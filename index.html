@@ -7,23 +7,20 @@
 <style>
 body {
     font-family: 'Segoe UI', sans-serif;
-    background: linear-gradient(#e8f5e9, #f1f8e9);
+    background-color: #e8f5e9;
     margin: 0;
     padding: 2rem;
     color: #2e7d32;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    background-size: cover;
-    background-repeat: no-repeat;
-    transition: background 1s ease, background-color 1s ease;
+    transition: background-color 0.8s ease;
     overflow-x: hidden;
 }
 h1 {
     text-align: center;
     font-size: 2.5em;
     margin-bottom: 1rem;
-    transition: color 1s ease;
 }
 .todo-item {
     background: #ffffff;
@@ -64,7 +61,6 @@ label {
     align-items: center;
     margin: 2rem auto 1rem;
     gap: 2rem;
-    flex-wrap: wrap;
 }
 .reset-button {
     padding: 1.5rem 2.5rem;
@@ -76,29 +72,11 @@ label {
     font-weight: bold;
     cursor: pointer;
     box-shadow: 0 8px 20px rgba(142, 36, 170, 0.4);
-    transition: background 0.5s ease, transform 0.3s ease, box-shadow 0.3s ease;
-    position: relative;
-    overflow: hidden;
+    transition: background 0.5s ease, transform 0.3s ease;
 }
 .reset-button:hover {
     background: linear-gradient(135deg, #7b1fa2, #ab47bc);
     transform: scale(1.08);
-    box-shadow: 0 12px 24px rgba(123, 31, 162, 0.6);
-}
-.reset-button.clicked {
-    animation: vibrate 0.3s ease, explode 0.6s ease;
-}
-@keyframes vibrate {
-    0% { transform: translateX(0); }
-    25% { transform: translateX(-4px); }
-    50% { transform: translateX(4px); }
-    75% { transform: translateX(-4px); }
-    100% { transform: translateX(0); }
-}
-@keyframes explode {
-    0% { box-shadow: 0 0 0 rgba(255,255,255,0); }
-    50% { box-shadow: 0 0 30px rgba(255,255,255,0.8); }
-    100% { box-shadow: 0 0 0 rgba(255,255,255,0); }
 }
 .counter-card {
     background: linear-gradient(135deg, #ab47bc, #8e24aa);
@@ -109,36 +87,6 @@ label {
     font-weight: bold;
     box-shadow: 0 8px 16px rgba(171, 71, 188, 0.5);
     text-align: center;
-}
-.cloud {
-    position: absolute;
-    background: #ba68c8;
-    border: none;
-    border-radius: 50%;
-    width: 150px;
-    height: 90px;
-    animation: cloud-float 8s ease-out forwards;
-}
-@keyframes cloud-float {
-    0% { transform: translateY(0) scale(1); opacity: 1; }
-    100% { transform: translateY(120vh) scale(1.2); opacity: 1; }
-}
-.greener {
-    background: linear-gradient(#a8e6cf, #dcedc8) !important;
-}
-.greener h1 {
-    color: #1b5e20 !important;
-}
-.todo-item.greener {
-    background: #e8f5e9 !important;
-}
-body.final-stage {
-    background: radial-gradient(circle at center, #a5d6a7, #81c784, #66bb6a);
-    animation: pulse 2s infinite alternate;
-}
-@keyframes pulse {
-    0% { background-position: 0% 50%; }
-    100% { background-position: 100% 50%; }
 }
 </style>
 </head>
@@ -169,69 +117,41 @@ const checkboxes = document.querySelectorAll('input[type="checkbox"]');
 const progressBar = document.getElementById('progress-bar');
 const resetButton = document.getElementById('reset-button');
 const counterDisplay = document.getElementById('counter');
-
 let palingenesiaCount = 0;
+
+// Couleurs de fond progressives du plus clair au plus foncé
+const greenShades = [
+    "#e8f5e9", // très clair
+    "#d0f0d0",
+    "#b8e8b8",
+    "#a0e0a0",
+    "#88d888",
+    "#70d070",
+    "#58c858",
+    "#40c040",
+    "#28b828",
+    "#10b010"  // vert profond final
+];
 
 function updateProgress() {
     const total = checkboxes.length;
     const checked = document.querySelectorAll('input[type="checkbox"]:checked').length;
     const percent = (checked / total) * 100;
     progressBar.style.width = percent + '%';
-    updateBackground(percent);
 
-    if (percent === 100) {
-        triggerFinalEffect();
-    }
+    updateBackground(checked);
 }
 
-function updateBackground(percent) {
-    if (percent < 25) {
-        document.body.style.backgroundColor = '#e0f2f1';
-    } else if (percent < 50) {
-        document.body.style.backgroundColor = '#c8e6c9';
-    } else if (percent < 75) {
-        document.body.style.backgroundColor = '#a5d6a7';
-    } else {
-        document.body.style.backgroundColor = '#81c784';
-    }
+function updateBackground(checkedCount) {
+    const index = Math.min(checkedCount, greenShades.length - 1);
+    document.body.style.backgroundColor = greenShades[index];
 }
 
 function resetAll() {
     checkboxes.forEach(cb => cb.checked = false);
-    document.body.classList.remove('final-stage');
     updateProgress();
-    triggerPalingenesia();
-    triggerButtonAnimation();
+    document.body.style.backgroundColor = greenShades[0];
     incrementCounter();
-}
-
-function triggerPalingenesia() {
-    document.body.classList.add('greener');
-    document.querySelectorAll('.todo-item').forEach(item => item.classList.add('greener'));
-    setTimeout(() => {
-        document.body.classList.remove('greener');
-        document.querySelectorAll('.todo-item').forEach(item => item.classList.remove('greener'));
-    }, 2000);
-}
-
-function triggerFinalEffect() {
-    document.body.classList.add('final-stage');
-    for (let i = 0; i < 20; i++) {
-        const cloud = document.createElement('div');
-        cloud.classList.add('cloud');
-        cloud.style.left = Math.random() * 100 + 'vw';
-        cloud.style.width = (120 + Math.random() * 100) + 'px';
-        cloud.style.height = (70 + Math.random() * 70) + 'px';
-        document.body.appendChild(cloud);
-        setTimeout(() => cloud.remove(), 8000);
-    }
-}
-
-function triggerButtonAnimation() {
-    resetButton.classList.add('clicked');
-    setTimeout(() => {
-        resetButton.classList.remove('clicked');
-    }, 600);
 }
 
 function incrementCounter() {
