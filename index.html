@@ -11,6 +11,9 @@
             margin: 0;
             padding: 2rem;
             color: #2e7d32;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
         h1 {
             text-align: center;
@@ -25,6 +28,7 @@
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
             display: flex;
             align-items: center;
+            transition: background-color 0.3s ease;
         }
         input[type="checkbox"] {
             width: 1.5rem;
@@ -34,6 +38,49 @@
         }
         label {
             font-size: 1.2rem;
+        }
+        .progress-container {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: #c8e6c9;
+            height: 20px;
+        }
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: #66bb6a;
+            transition: width 0.3s ease;
+        }
+        .reset-button {
+            margin: 2rem auto;
+            display: block;
+            padding: 0.8rem 1.5rem;
+            background-color: #a5d6a7;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            color: #2e7d32;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: background-color 0.3s ease;
+        }
+        .reset-button:hover {
+            background-color: #81c784;
+        }
+        .celebration {
+            text-align: center;
+            font-size: 2rem;
+            color: #66bb6a;
+            margin-top: 1rem;
+            display: none;
+            animation: pop 0.6s ease forwards;
+        }
+        @keyframes pop {
+            0% { transform: scale(0.7); opacity: 0; }
+            50% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(1); }
         }
     </style>
 </head>
@@ -72,6 +119,40 @@
             <label for="livre">📖 Avancer sur la lecture de mon livre</label>
         </div>
     </div>
+
+    <button class="reset-button" onclick="resetAll()">🌸 Palingénésie</button>
+
+    <div class="celebration" id="celebration">🎉 Bravo ! Toutes les tâches sont faites ! 🎉</div>
+
+    <div class="progress-container">
+        <div class="progress-bar" id="progress-bar"></div>
+    </div>
+
+<script>
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    const progressBar = document.getElementById('progress-bar');
+    const celebration = document.getElementById('celebration');
+
+    function updateProgress() {
+        const total = checkboxes.length;
+        const checked = document.querySelectorAll('input[type="checkbox"]:checked').length;
+        const percent = (checked / total) * 100;
+        progressBar.style.width = percent + '%';
+
+        if (percent === 100) {
+            celebration.style.display = 'block';
+        } else {
+            celebration.style.display = 'none';
+        }
+    }
+
+    function resetAll() {
+        checkboxes.forEach(cb => cb.checked = false);
+        updateProgress();
+    }
+
+    checkboxes.forEach(cb => cb.addEventListener('change', updateProgress));
+</script>
 
 </body>
 </html>
