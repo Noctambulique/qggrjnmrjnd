@@ -49,6 +49,7 @@ input[type="checkbox"] {
     height: 1.5rem;
     margin-right: 1rem;
     accent-color: #66bb6a;
+    transition: accent-color 0.3s ease;
 }
 label {
     font-size: 1.2rem;
@@ -65,7 +66,7 @@ label {
     height: 100%;
     width: 0%;
     background: #66bb6a;
-    transition: width 0.3s ease;
+    transition: width 0.3s ease, background-color 0.8s ease;
 }
 .button-container {
     display: flex;
@@ -149,11 +150,15 @@ function updateProgress() {
     if (checked === total) {
         title.textContent = "⭐⭐ MISSION ACHEVÉE ⭐⭐";
         title.classList.add("completed");
-        document.body.style.backgroundColor = "#fff9c4"; // fond jaune pastel
+        document.body.style.backgroundColor = "#fff9c4"; // Fond jaune pastel
+        progressBar.style.backgroundColor = "#FFD700"; // Jaune doré barre
+        checkboxes.forEach(cb => cb.style.accentColor = "#4CAF50"); // Cases en vert vif
     } else {
         title.textContent = "Mes Objectifs 🌿";
         title.classList.remove("completed");
         updateBackground(checked);
+        progressBar.style.backgroundColor = "#66bb6a"; // Retour normal barre
+        checkboxes.forEach(cb => cb.style.accentColor = "#66bb6a"); // Retour normal cases
     }
 }
 
