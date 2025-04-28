@@ -21,6 +21,12 @@ h1 {
     text-align: center;
     font-size: 2.5em;
     margin-bottom: 1rem;
+    transition: color 0.8s ease, font-size 0.8s ease;
+}
+h1.completed {
+    color: #FFD700;
+    font-size: 3em;
+    font-weight: bold;
 }
 .todo-item {
     background: #ffffff;
@@ -92,7 +98,7 @@ label {
 </head>
 <body>
 
-<h1>Mes Objectifs 🌿</h1>
+<h1 id="title">Mes Objectifs 🌿</h1>
 
 <div class="todo-list">
     <div class="todo-item"><input type="checkbox" id="devoirs"><label for="devoirs">✏️ Avancer sur mes devoirs</label></div>
@@ -117,20 +123,15 @@ const checkboxes = document.querySelectorAll('input[type="checkbox"]');
 const progressBar = document.getElementById('progress-bar');
 const resetButton = document.getElementById('reset-button');
 const counterDisplay = document.getElementById('counter');
+const title = document.getElementById('title');
+
 let palingenesiaCount = 0;
 
-// Couleurs de fond progressives du plus clair au plus foncé
+// Couleurs de fond vertes progressives
 const greenShades = [
-    "#e8f5e9", // très clair
-    "#d0f0d0",
-    "#b8e8b8",
-    "#a0e0a0",
-    "#88d888",
-    "#70d070",
-    "#58c858",
-    "#40c040",
-    "#28b828",
-    "#10b010"  // vert profond final
+    "#e8f5e9", "#d0f0d0", "#b8e8b8", "#a0e0a0",
+    "#88d888", "#70d070", "#58c858", "#40c040",
+    "#28b828", "#10b010"
 ];
 
 function updateProgress() {
@@ -140,6 +141,14 @@ function updateProgress() {
     progressBar.style.width = percent + '%';
 
     updateBackground(checked);
+
+    if (checked === total) {
+        title.textContent = "⭐⭐ MISSION ACHEVÉE ⭐⭐";
+        title.classList.add("completed");
+    } else {
+        title.textContent = "Mes Objectifs 🌿";
+        title.classList.remove("completed");
+    }
 }
 
 function updateBackground(checkedCount) {
