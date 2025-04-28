@@ -14,7 +14,10 @@
             display: flex;
             flex-direction: column;
             min-height: 100vh;
+            background-size: cover;
+            background-repeat: no-repeat;
             transition: background 1s ease;
+            overflow-x: hidden;
         }
         h1 {
             text-align: center;
@@ -72,18 +75,17 @@
             background-color: #81c784;
             transform: scale(1.05);
         }
-        .celebration {
-            text-align: center;
-            font-size: 2rem;
-            color: #66bb6a;
-            margin-top: 1rem;
-            display: none;
-            animation: pop 0.6s ease forwards;
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #66bb6a;
+            opacity: 0;
+            animation: confetti-fall 2s ease forwards;
         }
-        @keyframes pop {
-            0% { transform: scale(0.7); opacity: 0; }
-            50% { transform: scale(1.1); opacity: 1; }
-            100% { transform: scale(1); }
+        @keyframes confetti-fall {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
         }
         .greener {
             background: linear-gradient(#a8e6cf, #dcedc8) !important;
@@ -134,8 +136,6 @@
 
     <button class="reset-button" onclick="resetAll()">🌸 Palingénésie</button>
 
-    <div class="celebration" id="celebration">🎉 Bravo ! Toutes les tâches sont faites ! 🎉</div>
-
     <div class="progress-container">
         <div class="progress-bar" id="progress-bar"></div>
     </div>
@@ -143,7 +143,6 @@
 <script>
     const checkboxes = document.querySelectorAll('input[type="checkbox"]');
     const progressBar = document.getElementById('progress-bar');
-    const celebration = document.getElementById('celebration');
 
     function updateProgress() {
         const total = checkboxes.length;
@@ -151,10 +150,22 @@
         const percent = (checked / total) * 100;
         progressBar.style.width = percent + '%';
 
+        updateBackground(percent);
+
         if (percent === 100) {
-            celebration.style.display = 'block';
+            triggerConfetti();
+        }
+    }
+
+    function updateBackground(percent) {
+        if (percent < 25) {
+            document.body.style.backgroundImage = "url('https://www.transparenttextures.com/patterns/green-dust-and-scratches.png')";
+        } else if (percent < 50) {
+            document.body.style.backgroundImage = "url('https://www.transparenttextures.com/patterns/green-gobbler.png')";
+        } else if (percent < 75) {
+            document.body.style.backgroundImage = "url('https://www.transparenttextures.com/patterns/leaf.png')";
         } else {
-            celebration.style.display = 'none';
+            document.body.style.backgroundImage = "url('https://www.transparenttextures.com/patterns/green-cup.png')";
         }
     }
 
@@ -171,6 +182,17 @@
             document.body.classList.remove('greener');
             document.querySelectorAll('.todo-item').forEach(item => item.classList.remove('greener'));
         }, 2000);
+    }
+
+    function triggerConfetti() {
+        for (let i = 0; i < 50; i++) {
+            const confetti = document.createElement('div');
+            confetti.classList.add('confetti');
+            confetti.style.left = Math.random() * 100 + 'vw';
+            confetti.style.backgroundColor = `hsl(${Math.random() * 120 + 90}, 60%, 60%)`;
+            document.body.appendChild(confetti);
+            setTimeout(() => confetti.remove(), 2000);
+        }
     }
 
     checkboxes.forEach(cb => cb.addEventListener('change', updateProgress));
