@@ -58,9 +58,14 @@ label {
     background: #66bb6a;
     transition: width 0.3s ease;
 }
+.button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 2rem auto 1rem;
+    gap: 1rem;
+}
 .reset-button {
-    margin: 2rem auto;
-    display: block;
     padding: 1.5rem 2.5rem;
     background: linear-gradient(135deg, #8e24aa, #ba68c8);
     border: none;
@@ -91,21 +96,26 @@ label {
 }
 @keyframes explode {
     0% { box-shadow: 0 0 0 rgba(255,255,255,0); }
-    50% { box-shadow: 0 0 30px rgba(255,255,255,0.7); }
+    50% { box-shadow: 0 0 30px rgba(255,255,255,0.8); }
     100% { box-shadow: 0 0 0 rgba(255,255,255,0); }
+}
+#counter {
+    font-size: 1.4rem;
+    color: #4a148c;
+    font-weight: bold;
 }
 .confetti {
     position: absolute;
-    width: 10px;
-    height: 10px;
-    background-color: #66bb6a;
+    width: 15px;
+    height: 15px;
+    background-color: #ba68c8;
     opacity: 0;
-    animation: confetti-fall 2.5s ease forwards;
-    border-radius: 50%;
+    animation: confetti-fall 3s ease forwards;
+    border-radius: 4px;
 }
 @keyframes confetti-fall {
     0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-    100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+    100% { transform: translateY(120vh) rotate(720deg); opacity: 0; }
 }
 .greener {
     background: linear-gradient(#a8e6cf, #dcedc8) !important;
@@ -135,10 +145,14 @@ body.final-stage {
     <div class="todo-item"><input type="checkbox" id="memoire"><label for="memoire">📚 Progresser sur mon mémoire</label></div>
     <div class="todo-item"><input type="checkbox" id="cours"><label for="cours">✋️ Lire mon cours et en faire un résumé</label></div>
     <div class="todo-item"><input type="checkbox" id="philo"><label for="philo">💭 Étoffer mes fiches de philosophie</label></div>
+    <div class="todo-item"><input type="checkbox" id="memoire2"><label for="memoire2">🧠 Faire avancer mon mémoire</label></div>
     <div class="todo-item"><input type="checkbox" id="livre"><label for="livre">📖 Avancer sur l'écriture de mon livre</label></div>
 </div>
 
-<button class="reset-button" id="reset-button" onclick="resetAll()">🌸 Palingénésie</button>
+<div class="button-container">
+    <button class="reset-button" id="reset-button" onclick="resetAll()">🌸 Palingénésie</button>
+    <div id="counter">0</div>
+</div>
 
 <div class="progress-container">
     <div class="progress-bar" id="progress-bar"></div>
@@ -148,6 +162,9 @@ body.final-stage {
 const checkboxes = document.querySelectorAll('input[type="checkbox"]');
 const progressBar = document.getElementById('progress-bar');
 const resetButton = document.getElementById('reset-button');
+const counterDisplay = document.getElementById('counter');
+
+let palingenesiaCount = 0;
 
 function updateProgress() {
     const total = checkboxes.length;
@@ -179,6 +196,7 @@ function resetAll() {
     updateProgress();
     triggerPalingenesia();
     triggerButtonAnimation();
+    incrementCounter();
 }
 
 function triggerPalingenesia() {
@@ -192,13 +210,14 @@ function triggerPalingenesia() {
 
 function triggerFinalEffect() {
     document.body.classList.add('final-stage');
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < 150; i++) {
         const confetti = document.createElement('div');
         confetti.classList.add('confetti');
         confetti.style.left = Math.random() * 100 + 'vw';
-        confetti.style.backgroundColor = `hsl(${Math.random() * 120 + 90}, 70%, 60%)`;
+        // Couleur dans les violets uniquement
+        confetti.style.backgroundColor = `hsl(${270 + Math.random() * 40}, 80%, 65%)`;
         document.body.appendChild(confetti);
-        setTimeout(() => confetti.remove(), 2500);
+        setTimeout(() => confetti.remove(), 3000);
     }
 }
 
@@ -207,6 +226,11 @@ function triggerButtonAnimation() {
     setTimeout(() => {
         resetButton.classList.remove('clicked');
     }, 600);
+}
+
+function incrementCounter() {
+    palingenesiaCount++;
+    counterDisplay.textContent = palingenesiaCount;
 }
 
 checkboxes.forEach(cb => cb.addEventListener('change', updateProgress));
