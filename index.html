@@ -63,7 +63,8 @@ label {
     justify-content: center;
     align-items: center;
     margin: 2rem auto 1rem;
-    gap: 1rem;
+    gap: 2rem;
+    flex-wrap: wrap;
 }
 .reset-button {
     padding: 1.5rem 2.5rem;
@@ -99,24 +100,27 @@ label {
     50% { box-shadow: 0 0 30px rgba(255,255,255,0.8); }
     100% { box-shadow: 0 0 0 rgba(255,255,255,0); }
 }
-#counter {
-    font-size: 1.4rem;
-    color: #4a148c;
+.counter-card {
+    background: linear-gradient(135deg, #ab47bc, #8e24aa);
+    padding: 1.2rem 2rem;
+    border-radius: 16px;
+    color: white;
+    font-size: 1.5rem;
     font-weight: bold;
+    box-shadow: 0 8px 16px rgba(171, 71, 188, 0.5);
+    text-align: center;
 }
 .cloud {
     position: absolute;
     background: white;
-    opacity: 0.8;
     border-radius: 50%;
-    width: 80px;
-    height: 50px;
-    filter: blur(8px);
-    animation: cloud-float 6s ease-out forwards;
+    width: 150px;
+    height: 90px;
+    animation: cloud-float 8s ease-out forwards;
 }
 @keyframes cloud-float {
     0% { transform: translateY(0) scale(1); opacity: 1; }
-    100% { transform: translateY(120vh) scale(1.5); opacity: 0; }
+    100% { transform: translateY(120vh) scale(1.2); opacity: 1; }
 }
 .greener {
     background: linear-gradient(#a8e6cf, #dcedc8) !important;
@@ -152,7 +156,7 @@ body.final-stage {
 
 <div class="button-container">
     <button class="reset-button" id="reset-button" onclick="resetAll()">🌸 Palingénésie</button>
-    <div id="counter">0</div>
+    <div class="counter-card" id="counter">0</div>
 </div>
 
 <div class="progress-container">
@@ -211,14 +215,14 @@ function triggerPalingenesia() {
 
 function triggerFinalEffect() {
     document.body.classList.add('final-stage');
-    for (let i = 0; i < 30; i++) {
+    for (let i = 0; i < 20; i++) {
         const cloud = document.createElement('div');
         cloud.classList.add('cloud');
         cloud.style.left = Math.random() * 100 + 'vw';
-        cloud.style.width = (60 + Math.random() * 60) + 'px';
-        cloud.style.height = (30 + Math.random() * 40) + 'px';
+        cloud.style.width = (120 + Math.random() * 80) + 'px';
+        cloud.style.height = (70 + Math.random() * 50) + 'px';
         document.body.appendChild(cloud);
-        setTimeout(() => cloud.remove(), 6000);
+        setTimeout(() => cloud.remove(), 8000);
     }
 }
 
