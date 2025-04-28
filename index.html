@@ -62,18 +62,37 @@ label {
     margin: 2rem auto;
     display: block;
     padding: 1.5rem 2.5rem;
-    background-color: #81c784;
+    background: linear-gradient(135deg, #8e24aa, #ba68c8);
     border: none;
-    border-radius: 16px;
-    font-size: 1.6rem;
-    color: #2e7d32;
+    border-radius: 20px;
+    font-size: 1.8rem;
+    color: white;
+    font-weight: bold;
     cursor: pointer;
-    box-shadow: 0 10px 15px rgba(0,0,0,0.2);
-    transition: background-color 0.4s ease, transform 0.3s ease;
+    box-shadow: 0 8px 20px rgba(142, 36, 170, 0.4);
+    transition: background 0.5s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
 }
 .reset-button:hover {
-    background-color: #66bb6a;
-    transform: scale(1.1);
+    background: linear-gradient(135deg, #7b1fa2, #ab47bc);
+    transform: scale(1.08);
+    box-shadow: 0 12px 24px rgba(123, 31, 162, 0.6);
+}
+.reset-button.clicked {
+    animation: vibrate 0.3s ease, explode 0.6s ease;
+}
+@keyframes vibrate {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-4px); }
+    50% { transform: translateX(4px); }
+    75% { transform: translateX(-4px); }
+    100% { transform: translateX(0); }
+}
+@keyframes explode {
+    0% { box-shadow: 0 0 0 rgba(255,255,255,0); }
+    50% { box-shadow: 0 0 30px rgba(255,255,255,0.7); }
+    100% { box-shadow: 0 0 0 rgba(255,255,255,0); }
 }
 .confetti {
     position: absolute;
@@ -120,7 +139,7 @@ body.final-stage {
     <div class="todo-item"><input type="checkbox" id="livre"><label for="livre">📖 Avancer sur l'écriture de mon livre</label></div>
 </div>
 
-<button class="reset-button" onclick="resetAll()">🌸 Palingénésie</button>
+<button class="reset-button" id="reset-button" onclick="resetAll()">🌸 Palingénésie</button>
 
 <div class="progress-container">
     <div class="progress-bar" id="progress-bar"></div>
@@ -129,6 +148,7 @@ body.final-stage {
 <script>
 const checkboxes = document.querySelectorAll('input[type="checkbox"]');
 const progressBar = document.getElementById('progress-bar');
+const resetButton = document.getElementById('reset-button');
 
 function updateProgress() {
     const total = checkboxes.length;
@@ -159,6 +179,7 @@ function resetAll() {
     document.body.classList.remove('final-stage');
     updateProgress();
     triggerPalingenesia();
+    triggerButtonAnimation();
 }
 
 function triggerPalingenesia() {
@@ -180,6 +201,13 @@ function triggerFinalEffect() {
         document.body.appendChild(confetti);
         setTimeout(() => confetti.remove(), 2500);
     }
+}
+
+function triggerButtonAnimation() {
+    resetButton.classList.add('clicked');
+    setTimeout(() => {
+        resetButton.classList.remove('clicked');
+    }, 600);
 }
 
 checkboxes.forEach(cb => cb.addEventListener('change', updateProgress));
