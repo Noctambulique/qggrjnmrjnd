@@ -112,7 +112,8 @@ label {
 }
 .cloud {
     position: absolute;
-    background: white;
+    background: #ba68c8;
+    border: 2px solid #d1c4e9;
     border-radius: 50%;
     width: 150px;
     height: 90px;
@@ -219,8 +220,8 @@ function triggerFinalEffect() {
         const cloud = document.createElement('div');
         cloud.classList.add('cloud');
         cloud.style.left = Math.random() * 100 + 'vw';
-        cloud.style.width = (120 + Math.random() * 80) + 'px';
-        cloud.style.height = (70 + Math.random() * 50) + 'px';
+        cloud.style.width = (120 + Math.random() * 100) + 'px';
+        cloud.style.height = (70 + Math.random() * 70) + 'px';
         document.body.appendChild(cloud);
         setTimeout(() => cloud.remove(), 8000);
     }
