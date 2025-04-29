@@ -101,19 +101,33 @@ label {
     box-shadow: 0 8px 16px rgba(171, 71, 188, 0.5);
     text-align: center;
 }
+.columns {
+    display: flex;
+    justify-content: center;
+    gap: 4rem;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+}
 </style>
 </head>
 <body>
 
 <h1 id="title">Mes Objectifs 🌿</h1>
 
-<div class="todo-list">
-    <div class="todo-item"><input type="checkbox" id="devoirs"><label for="devoirs">✏️ Avancer sur mes devoirs</label></div>
-    <div class="todo-item"><input type="checkbox" id="memoire"><label for="memoire">📚 Progresser sur mon mémoire</label></div>
-    <div class="todo-item"><input type="checkbox" id="cours"><label for="cours">✋️ Lire mon cours et en faire un résumé</label></div>
-    <div class="todo-item"><input type="checkbox" id="philo"><label for="philo">💭 Étoffer mes fiches de philosophie</label></div>
-    <div class="todo-item"><input type="checkbox" id="memoire2"><label for="memoire2">🫦 Parler à des gens</label></div>
-    <div class="todo-item"><input type="checkbox" id="livre"><label for="livre">📖 Avancer sur l'écriture de mon livre</label></div>
+<div class="columns">
+    <div class="todo-list">
+        <div class="todo-item"><input type="checkbox" id="devoirs"><label for="devoirs">✏️ Avancer sur mes devoirs</label></div>
+        <div class="todo-item"><input type="checkbox" id="memoire"><label for="memoire">📚 Progresser sur mon mémoire</label></div>
+        <div class="todo-item"><input type="checkbox" id="cours"><label for="cours">✋️ Lire mon cours et en faire un résumé</label></div>
+        <div class="todo-item"><input type="checkbox" id="philo"><label for="philo">💭 Étoffer mes fiches de philosophie</label></div>
+        <div class="todo-item"><input type="checkbox" id="memoire2"><label for="memoire2">🫦 Parler à des gens</label></div>
+        <div class="todo-item"><input type="checkbox" id="livre"><label for="livre">📖 Avancer sur l'écriture de mon livre</label></div>
+    </div>
+
+    <div class="todo-list">
+        <div class="todo-item"><input type="checkbox" id="creer"><label for="creer">🎨 Créer un truc</label></div>
+        <div class="todo-item"><input type="checkbox" id="liste"><label for="liste">📋 Améliorer une liste</label></div>
+    </div>
 </div>
 
 <div class="button-container">
@@ -134,7 +148,6 @@ const title = document.getElementById('title');
 
 let palingenesiaCount = 0;
 
-// Couleurs de fond vertes progressives
 const greenShades = [
     "#e8f5e9", "#d0f0d0", "#b8e8b8", "#a0e0a0",
     "#88d888", "#70d070", "#58c858", "#40c040",
@@ -150,15 +163,15 @@ function updateProgress() {
     if (checked === total) {
         title.textContent = "⭐⭐ MISSION ACHEVÉE ⭐⭐";
         title.classList.add("completed");
-        document.body.style.backgroundColor = "#fff9c4"; // Fond jaune pastel
-        progressBar.style.backgroundColor = "#FFD700"; // Jaune doré barre
-        checkboxes.forEach(cb => cb.style.accentColor = "#4CAF50"); // Cases en vert vif
+        document.body.style.backgroundColor = "#fff9c4";
+        progressBar.style.backgroundColor = "#FFD700";
+        checkboxes.forEach(cb => cb.style.accentColor = "#4CAF50");
     } else {
         title.textContent = "Mes Objectifs 🌿";
         title.classList.remove("completed");
         updateBackground(checked);
-        progressBar.style.backgroundColor = "#66bb6a"; // Retour normal barre
-        checkboxes.forEach(cb => cb.style.accentColor = "#66bb6a"); // Retour normal cases
+        progressBar.style.backgroundColor = "#66bb6a";
+        checkboxes.forEach(cb => cb.style.accentColor = "#66bb6a");
     }
 }
 
