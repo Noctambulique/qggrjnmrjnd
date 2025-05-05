@@ -68,39 +68,6 @@ label {
     background: #66bb6a;
     transition: width 0.3s ease, background-color 0.8s ease;
 }
-.button-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 2rem auto 1rem;
-    gap: 2rem;
-}
-.reset-button {
-    padding: 1.5rem 2.5rem;
-    background: linear-gradient(135deg, #8e24aa, #ba68c8);
-    border: none;
-    border-radius: 20px;
-    font-size: 1.8rem;
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
-    box-shadow: 0 8px 20px rgba(142, 36, 170, 0.4);
-    transition: background 0.5s ease, transform 0.3s ease;
-}
-.reset-button:hover {
-    background: linear-gradient(135deg, #7b1fa2, #ab47bc);
-    transform: scale(1.08);
-}
-.counter-card {
-    background: linear-gradient(135deg, #ab47bc, #8e24aa);
-    padding: 1.2rem 2rem;
-    border-radius: 16px;
-    color: white;
-    font-size: 1.5rem;
-    font-weight: bold;
-    box-shadow: 0 8px 16px rgba(171, 71, 188, 0.5);
-    text-align: center;
-}
 .columns {
     display: flex;
     justify-content: center;
@@ -122,6 +89,7 @@ label {
         <div class="todo-item"><input type="checkbox" id="philo"><label for="philo">💭 Étoffer mes fiches de philosophie</label></div>
         <div class="todo-item"><input type="checkbox" id="memoire2"><label for="memoire2">🫦 Parler à des gens</label></div>
         <div class="todo-item"><input type="checkbox" id="livre"><label for="livre">📖 Avancer sur l'écriture de mon livre</label></div>
+        <div class="todo-item"><input type="checkbox" id="philosopher"><label for="philosopher">🧠 Faire de la philosophie</label></div>
     </div>
 
     <div class="todo-list">
@@ -129,12 +97,8 @@ label {
         <div class="todo-item"><input type="checkbox" id="liste"><label for="liste">📋 Améliorer une liste</label></div>
         <div class="todo-item"><input type="checkbox" id="plantes"><label for="plantes">🪴 S'occuper des plantes</label></div>
         <div class="todo-item"><input type="checkbox" id="nouveau"><label for="nouveau">🧪 Tester un nouveau truc</label></div>
+        <div class="todo-item"><input type="checkbox" id="chemises"><label for="chemises">👕 Regarder des chemises</label></div>
     </div>
-</div>
-
-<div class="button-container">
-    <button class="reset-button" id="reset-button" onclick="resetAll()">🌸 Palingénésie</button>
-    <div class="counter-card" id="counter">0</div>
 </div>
 
 <div class="progress-container">
@@ -144,11 +108,7 @@ label {
 <script>
 const checkboxes = document.querySelectorAll('input[type="checkbox"]');
 const progressBar = document.getElementById('progress-bar');
-const resetButton = document.getElementById('reset-button');
-const counterDisplay = document.getElementById('counter');
 const title = document.getElementById('title');
-
-let palingenesiaCount = 0;
 
 const greenShades = [
     "#e8f5e9", "#d0f0d0", "#b8e8b8", "#a0e0a0",
@@ -180,18 +140,6 @@ function updateProgress() {
 function updateBackground(checkedCount) {
     const index = Math.min(checkedCount, greenShades.length - 1);
     document.body.style.backgroundColor = greenShades[index];
-}
-
-function resetAll() {
-    checkboxes.forEach(cb => cb.checked = false);
-    updateProgress();
-    document.body.style.backgroundColor = greenShades[0];
-    incrementCounter();
-}
-
-function incrementCounter() {
-    palingenesiaCount++;
-    counterDisplay.textContent = palingenesiaCount;
 }
 
 checkboxes.forEach(cb => cb.addEventListener('change', updateProgress));
