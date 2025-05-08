@@ -44,6 +44,9 @@ h1.completed {
     align-items: center;
     transition: background-color 0.3s ease;
 }
+.todo-item.floral {
+    background-image: repeating-linear-gradient(45deg, #fce4ec, #fce4ec 10px, #f3e5f5 10px, #f3e5f5 20px);
+}
 input[type="checkbox"] {
     width: 1.5rem;
     height: 1.5rem;
@@ -121,8 +124,9 @@ const greenShades = [
 
 const flowers = ['🌸','🌼','🌺','🌻','🌷','💐','🌹'];
 const baseTexts = {};
+const offCount = {};
 
-function randomFlowers(count = 5) {
+function randomFlowers(count = 6) {
     let res = '';
     for (let i = 0; i < count; i++) {
         res += flowers[Math.floor(Math.random() * flowers.length)] + " ";
@@ -132,20 +136,23 @@ function randomFlowers(count = 5) {
 
 checkboxes.forEach(cb => {
     const label = document.querySelector(`label[for="${cb.id}"]`);
+    const item = cb.closest('.todo-item');
     baseTexts[cb.id] = label.textContent;
-
-    let toggledOffOnce = false;
+    offCount[cb.id] = 0;
 
     cb.addEventListener('change', () => {
         if (cb.checked) {
             label.textContent = baseTexts[cb.id];
-            toggledOffOnce = false;
+            item.classList.remove('floral');
+            offCount[cb.id] = 0;
         } else {
-            if (!toggledOffOnce) {
-                label.textContent = randomFlowers(3) + " " + baseTexts[cb.id] + " " + randomFlowers(2);
-                toggledOffOnce = true;
+            offCount[cb.id]++;
+            if (offCount[cb.id] === 1) {
+                label.textContent = randomFlowers(4) + " " + baseTexts[cb.id] + " " + randomFlowers(3);
+                item.classList.add('floral');
             } else {
-                label.textContent = randomFlowers(5);
+                label.textContent = randomFlowers(7);
+                item.classList.add('floral');
             }
         }
         updateProgress();
