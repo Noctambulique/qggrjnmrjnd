@@ -54,6 +54,7 @@ input[type="checkbox"] {
 label {
     font-size: 1.2rem;
     transition: all 0.3s ease;
+    white-space: pre-line;
 }
 .progress-container {
     position: fixed;
@@ -89,17 +90,17 @@ label {
         <div class="todo-item"><input type="checkbox" id="cours"><label for="cours">✋️ Lire mon cours et en faire un résumé</label></div>
         <div class="todo-item"><input type="checkbox" id="philo"><label for="philo">💭 Étoffer mes fiches de philosophie</label></div>
         <div class="todo-item"><input type="checkbox" id="memoire2"><label for="memoire2">🫦 Parler à des gens</label></div>
-        <div class="todo-item"><input type="checkbox" id="livre"><label for="livre">📖 Avancer sur l'écriture de mon livre</label></div>
         <div class="todo-item"><input type="checkbox" id="philosopher"><label for="philosopher">🧠 Faire de la philo</label></div>
-        <div class="todo-item"><input type="checkbox" id="sport"><label for="sport">🏃 Faire du sport</label></div>
     </div>
 
     <div class="todo-list">
+        <div class="todo-item"><input type="checkbox" id="livre"><label for="livre">📖 Avancer sur l'écriture de mon livre</label></div>
         <div class="todo-item"><input type="checkbox" id="creer"><label for="creer">🎨 Créer un truc</label></div>
         <div class="todo-item"><input type="checkbox" id="liste"><label for="liste">📋 Améliorer une liste</label></div>
         <div class="todo-item"><input type="checkbox" id="plantes"><label for="plantes">🪴 S'occuper des plantes</label></div>
         <div class="todo-item"><input type="checkbox" id="nouveau"><label for="nouveau">🧪 Tester un nouveau truc</label></div>
         <div class="todo-item"><input type="checkbox" id="chemises"><label for="chemises">👕 Regarder des chemises</label></div>
+        <div class="todo-item"><input type="checkbox" id="sport"><label for="sport">🏃 Faire du sport</label></div>
     </div>
 </div>
 
@@ -119,15 +120,37 @@ const greenShades = [
 ];
 
 const flowers = ['🌸','🌼','🌺','🌻','🌷','💐','🌹'];
+const baseTexts = {};
 
-function randomFlowers(count = 3) {
+function randomFlowers(count = 5) {
     let res = '';
     for (let i = 0; i < count; i++) {
-        const f = flowers[Math.floor(Math.random() * flowers.length)];
-        res += f;
+        res += flowers[Math.floor(Math.random() * flowers.length)] + " ";
     }
-    return res;
+    return res.trim();
 }
+
+checkboxes.forEach(cb => {
+    const label = document.querySelector(`label[for="${cb.id}"]`);
+    baseTexts[cb.id] = label.textContent;
+
+    let toggledOffOnce = false;
+
+    cb.addEventListener('change', () => {
+        if (cb.checked) {
+            label.textContent = baseTexts[cb.id];
+            toggledOffOnce = false;
+        } else {
+            if (!toggledOffOnce) {
+                label.textContent = randomFlowers(3) + " " + baseTexts[cb.id] + " " + randomFlowers(2);
+                toggledOffOnce = true;
+            } else {
+                label.textContent = randomFlowers(5);
+            }
+        }
+        updateProgress();
+    });
+});
 
 function updateProgress() {
     const total = checkboxes.length;
@@ -149,20 +172,6 @@ function updateProgress() {
         checkboxes.forEach(cb => cb.style.accentColor = "#66bb6a");
     }
 }
-
-checkboxes.forEach(cb => {
-    const label = document.querySelector(`label[for="${cb.id}"]`);
-    const baseText = label.textContent;
-
-    cb.addEventListener('change', () => {
-        if (!cb.checked) {
-            label.textContent = randomFlowers(3) + " " + baseText + " " + randomFlowers(2);
-        } else {
-            label.textContent = baseText;
-        }
-        updateProgress();
-    });
-});
 
 function updateBackground(checkedCount) {
     const index = Math.min(checkedCount, greenShades.length - 1);
