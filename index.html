@@ -123,8 +123,9 @@ const greenShades = [
 ];
 
 const flowers = ['🌸','🌼','🌺','🌻','🌷','💐','🌹'];
+
 const baseTexts = {};
-const offCount = {};
+const clickCount = {};
 
 function randomFlowers(count = 6) {
     let res = '';
@@ -138,22 +139,20 @@ checkboxes.forEach(cb => {
     const label = document.querySelector(`label[for="${cb.id}"]`);
     const item = cb.closest('.todo-item');
     baseTexts[cb.id] = label.textContent;
-    offCount[cb.id] = 0;
+    clickCount[cb.id] = 0;
 
     cb.addEventListener('change', () => {
         if (cb.checked) {
-            label.textContent = baseTexts[cb.id];
-            item.classList.remove('floral');
-            offCount[cb.id] = 0;
-        } else {
-            offCount[cb.id]++;
-            if (offCount[cb.id] === 1) {
-                label.textContent = randomFlowers(4) + " " + baseTexts[cb.id] + " " + randomFlowers(3);
+            clickCount[cb.id]++;
+            if (clickCount[cb.id] === 2) {
+                label.textContent = randomFlowers(8);
                 item.classList.add('floral');
             } else {
-                label.textContent = randomFlowers(7);
-                item.classList.add('floral');
+                label.textContent = baseTexts[cb.id];
+                item.classList.remove('floral');
             }
+        } else {
+            // On laisse le texte en l’état à la décoche
         }
         updateProgress();
     });
@@ -187,4 +186,3 @@ function updateBackground(checkedCount) {
 </script>
 
 </body>
-</html>
